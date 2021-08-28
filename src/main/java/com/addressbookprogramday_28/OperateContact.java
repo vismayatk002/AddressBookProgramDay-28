@@ -1,12 +1,16 @@
 package com.addressbookprogramday_28;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import com.opencsv.CSVWriter;
 
 public class OperateContact {
 
@@ -143,5 +147,25 @@ public class OperateContact {
     	}catch(IOException e) {
     		System.out.print("Unable to write contact into file" + e.getMessage());
     	}
+    }
+    
+    //write contact as CSV file
+    public void writeContactAsCsv() throws IOException {
+    	
+    	//Instantiating the CSVWriter class
+        CSVWriter writer = new CSVWriter(new FileWriter("contact.csv"));
+        String line[] = {"First Name", "Last Name", "Address", "City", "State", "Pone Number", "E-mail", "Zip"};
+        List contactList = new ArrayList();
+        contactList.add(line);
+        contactMap.forEach((name,contact) -> {
+        	
+    		String line1[] = {contact.getFirstName().toString(), contact.getLastName().toString(), contact.getAddress().toString(), contact.getCity().toString(), contact.getState().toString(), String.valueOf(contact.getPhoneNo()), contact.getEmail().toString(), String.valueOf(contact.getZip())};
+    		contactList.add(line1);
+    		
+        });
+        //Writing data to the csv file
+        writer.writeAll(contactList);
+        writer.flush();
+        System.out.println("Data entered");
     }
 }
