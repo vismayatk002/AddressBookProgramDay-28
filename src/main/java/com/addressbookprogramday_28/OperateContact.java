@@ -2,6 +2,7 @@ package com.addressbookprogramday_28;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import com.google.gson.Gson;
 import com.opencsv.CSVWriter;
 
 public class OperateContact {
@@ -167,5 +169,24 @@ public class OperateContact {
         writer.writeAll(contactList);
         writer.flush();
         System.out.println("Data entered");
+    }
+    
+    //write contact into JSONfile 
+    public void writeContactAsJson() {
+    	
+	    try {
+	  
+	    	// create a writer
+	        Writer writer = new FileWriter("contact.json");
+	
+	        // convert map to JSON File
+	        new Gson().toJson(contactMap, writer);
+	
+	        // close the writer
+	        writer.close();
+	        
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
     }
 }
